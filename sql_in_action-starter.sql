@@ -102,16 +102,9 @@ LIMIT 1;
 -- HINT: Work this one step at a time. See if you can find a way to just display the count of listings per host first.
 
 -- EXPECTED OUTPUT: The Box House Hotel with 6 listings
-SELECT host_id, COUNT(*) AS total_listings
+SELECT host_name, COUNT(*) AS total_listings
 FROM final_airbnb
-GROUP BY host_id
-ORDER BY total_listings DESC
-LIMIT 1;
-
-SELECT h.host_id, h.host_name, COUNT(*) AS total_listings
-FROM final_airbnb AS l
-JOIN hosts AS h ON l.host_id = h.host_id
-GROUP BY h.host_id, h.host_name
+GROUP BY host_name
 ORDER BY total_listings DESC
 LIMIT 1;
 
@@ -124,4 +117,4 @@ LIMIT 1;
 -- <<<<<<<<<<<<<<<<<<<<< ** BONUS ** >>>>>>>>>>>>>>>>>>>>>>>
 -- Find the the percent above or below each listing is compared to the average price for all listings.
 -- HINT: No hints! It's a bonus for a reason :)
-
+SELECT *, ((price - avg_price) / avg_price) * 100 AS percent_difference FROM final_airbnb, (SELECT AVG(price) AS avg_price FROM final_airbnb) AS avg_prices;
